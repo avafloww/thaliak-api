@@ -1,0 +1,41 @@
+{
+  "name": "thaliak-api",
+  "version": "2.0.0",
+  "main": "dist/server.js",
+  "packageManager": "yarn@3.2.2",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "lint": "eslint --fix . && prettier --write --ignore-unknown .",
+    "clean": "rm -rf dist/",
+    "build": "yarn clean && tsc",
+    "start": "node dist/server.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.3",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-eslint": "^15.0.1",
+    "typescript": "^4.7.4"
+  },
+  "lint-staged": {
+    "*.{js,ts,json}": [
+      "eslint --fix",
+      "prettier --write -u"
+    ]
+  },
+  "dependencies": {
+    "apollo-server": "^3.10.1",
+    "apollo-server-core": "^3.10.1",
+    "class-validator": "^0.13.2",
+    "dotenv": "^16.0.1",
+    "graphql": "^15",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.2.0-rc.1",
+    "typedi": "^0.10.0",
+    "typeorm": "^0.3.7"
+  }
+}
