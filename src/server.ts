@@ -81,6 +81,7 @@ async function bootstrap() {
   await server.start();
   server.applyMiddleware({
     app,
+    path: '/'
   });
 
   await new Promise<void>(resolve => httpServer.listen({ port }, resolve));
