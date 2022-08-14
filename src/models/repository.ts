@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+import { Version } from './version';
 
 @ObjectType()
 @Entity({ name: 'Repositories' })
@@ -20,4 +21,8 @@ export class Repository extends BaseEntity {
   @Field()
   @Column({ name: 'Slug' })
   public slug: string;
+
+  @Field(() => [Version])
+  @OneToMany(() => Version, v => v.repository, { lazy: true })
+  public versions: Promise<Version[]>;
 }
