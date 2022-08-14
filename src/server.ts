@@ -1,13 +1,15 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import http from 'http';
+import express from 'express';
 import { useContainer, DataSource } from 'typeorm';
 import { File } from './models/file';
 import { Patch } from './models/patch';
 import { PatchChain } from './models/patchChain';
 import { Repository } from './models/repository';
 import { Version } from './models/version';
-import { ApolloServer } from 'apollo-server';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { buildSchema } from 'type-graphql';
 import { PatchResolver } from './resolvers/patch';
 import { PatchChainResolver } from './resolvers/patchChain';
@@ -40,6 +42,8 @@ async function bootstrap() {
   Container.set(DataSource, db);
   useContainer(Container);
 
+  const schemaFile = __dirname + '/schema.graphql';
+
   // build graphql schema
   const schema = await buildSchema({
     container: Container,
@@ -48,9 +52,20 @@ async function bootstrap() {
       PatchResolver,
       PatchChainResolver,
       RepositoryResolver,
-      VersionResolver
-    ]
+      VersionResolver,
+    ],
+    emitSchemaFile: schemaFile,
   });
+
+  // init express
+  const app = express();
+
+  // statically serve the schema
+  const staticSchema = express.static(schemaFile);
+  app.use('/schema.graphql', staticSchema);
+  app.use('/schema.gql', staticSchema);
+
+  const httpServer = http.createServer(app);
 
   // init apollo
   const port = parseInt(process.env.PORT ?? '4000');
@@ -58,11 +73,17 @@ async function bootstrap() {
     schema,
     introspection: true,
     plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground()
-    ]
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageGraphQLPlayground(),
+    ],
   });
 
-  await server.listen({ port });
+  await server.start();
+  server.applyMiddleware({
+    app,
+  });
+
+  await new Promise<void>(resolve => httpServer.listen({ port }, resolve));
   console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 }
 
