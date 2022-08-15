@@ -5,7 +5,7 @@ import { Service } from 'typedi';
 @ArgsType()
 class FindOneArgs {
   @Field(() => ID)
-  id: number;
+  id: string;
 }
 
 @Service()
@@ -16,8 +16,8 @@ export class PatchChainResolver {
     return PatchChain.find();
   }
 
-  @Query(() => PatchChain)
+  @Query(() => PatchChain, { nullable: true })
   async patchChain(@Args() { id }: FindOneArgs) {
-    return PatchChain.findOne({ where: { id } });
+    return PatchChain.findOne({ where: { ...PatchChain.decode(id) } });
   }
 }

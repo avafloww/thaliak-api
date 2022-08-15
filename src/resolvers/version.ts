@@ -5,7 +5,7 @@ import { Service } from 'typedi';
 @ArgsType()
 class FindOneArgs {
   @Field(() => ID)
-  id: number;
+  id: string;
 }
 
 @Service()
@@ -16,8 +16,8 @@ export class VersionResolver {
     return Version.find();
   }
 
-  @Query(() => Version)
+  @Query(() => Version, { nullable: true })
   async version(@Args() { id }: FindOneArgs) {
-    return Version.findOne({ where: { id } });
+    return Version.findOne({ where: { ...Version.decode(id) } });
   }
 }

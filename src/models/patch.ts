@@ -5,21 +5,29 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Version } from './version';
 import { Repository } from './repository';
 import { PatchChain } from './patchChain';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, Int, ObjectType } from 'type-graphql';
+import { OpaqueID, TransparentID } from '../util/opaqueId';
 
 @ObjectType()
 @Entity({ name: 'Patches' })
 export class Patch extends BaseEntity {
 
-  @Field(() => ID)
   @PrimaryGeneratedColumn({ name: 'Id' })
-  public id: number;
+  public dbId: number;
+
+  @Field(() => ID)
+  public get id(): string {
+    return OpaqueID.encode(Patch, this.dbId);
+  }
+
+  public static decode(opaqueId: string): TransparentID {
+    return OpaqueID.decode(Patch, opaqueId);
+  }
 
   @Field(() => Version)
   @ManyToOne(() => Version, { lazy: true })
@@ -35,7 +43,6 @@ export class Patch extends BaseEntity {
   @Column({ name: 'RemoteOriginPath' })
   public remoteOriginPath: string;
 
-  @Field()
   @Column({ name: 'LocalStoragePath' })
   public localStoragePath: string;
 
@@ -55,7 +62,7 @@ export class Patch extends BaseEntity {
   @Column({ name: 'LastOffered', nullable: true })
   public lastOffered?: Date;
 
-  @Field()
+  @Field(() => Int)
   @Column({ name: 'Size' })
   public size: number;
 
@@ -63,7 +70,7 @@ export class Patch extends BaseEntity {
   @Column({ name: 'HashType', nullable: true })
   public hashType?: string;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   @Column({ name: 'HashBlockSize', nullable: true })
   public hashBlockSize?: number;
 

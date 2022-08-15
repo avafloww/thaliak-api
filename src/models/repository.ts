@@ -1,14 +1,23 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Version } from './version';
+import { OpaqueID, TransparentID } from '../util/opaqueId';
 
 @ObjectType()
 @Entity({ name: 'Repositories' })
 export class Repository extends BaseEntity {
 
-  @Field(() => ID)
   @PrimaryGeneratedColumn({ name: 'Id' })
-  public id: number;
+  public dbId: number;
+
+  @Field(() => ID)
+  public get id(): string {
+    return OpaqueID.encode(Repository, this.dbId);
+  }
+
+  public static decode(opaqueId: string): TransparentID {
+    return OpaqueID.decode(Repository, opaqueId);
+  }
 
   @Field()
   @Column({ name: 'Name' })

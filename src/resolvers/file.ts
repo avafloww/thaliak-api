@@ -3,27 +3,54 @@ import { File } from '../models/file';
 import { Service } from 'typedi';
 
 @ArgsType()
-class FindOneArgs {
-  @Field(() => ID)
-  id: string;
+class FindManyArgs {
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  sha1?: string;
+}
+
+@ArgsType()
+class FindOneArgs extends FindManyArgs {
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @Service()
 @Resolver(File)
 export class FileResolver {
   @Query(() => [File])
-  async files() {
-    return File.find();
+  async files(@Args() { name, sha1 }: FindManyArgs) {
+    if (sha1 && name) {
+      return File.find({ where: { sha1, name } });
+    }
+
+    if (sha1) {
+      return File.find({ where: { sha1 } });
+    }
+
+    if (name) {
+      return File.find({ where: { name } });
+    }
   }
 
-  @Query(() => File)
-  async file(@Args() { id }: FindOneArgs) {
-    const [name, sha1] = id.split('@');
+  @Query(() => File, { nullable: true })
+  async file(@Args() { id, name, sha1 }: FindOneArgs) {
+    if (id) {
+      return File.findOne({ where: { ...File.decode(id) } });
+    }
 
-    return File.findOne({
-      where: {
-        name, sha1,
-      },
-    });
+    if (sha1 && name) {
+      return File.findOne({ where: { sha1, name } });
+    }
+
+    if (sha1) {
+      return File.findOne({ where: { sha1 } });
+    }
+
+    if (name) {
+      return File.findOne({ where: { name } });
+    }
   }
 }

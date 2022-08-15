@@ -2,14 +2,23 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColu
 import { Repository } from './repository';
 import { Patch } from './patch';
 import { Field, ID, ObjectType } from 'type-graphql';
+import { OpaqueID, TransparentID } from '../util/opaqueId';
 
 @ObjectType()
 @Entity({ name: 'PatchChains' })
 export class PatchChain extends BaseEntity {
 
-  @Field(() => ID)
   @PrimaryGeneratedColumn({ name: 'Id' })
-  public id: number;
+  public dbId: number;
+
+  @Field(() => ID)
+  public get id(): string {
+    return OpaqueID.encode(PatchChain, this.dbId);
+  }
+
+  public static decode(opaqueId: string): TransparentID {
+    return OpaqueID.decode(PatchChain, opaqueId);
+  }
 
   @Field(() => Repository)
   @ManyToOne(() => Repository, { lazy: true })

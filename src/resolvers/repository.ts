@@ -5,7 +5,7 @@ import { Service } from 'typedi';
 @ArgsType()
 class FindOneArgs {
   @Field(() => ID)
-  id: number;
+  id: string;
 }
 
 @Service()
@@ -16,8 +16,8 @@ export class RepositoryResolver {
     return Repository.find();
   }
 
-  @Query(() => Repository)
+  @Query(() => Repository, { nullable: true })
   async repository(@Args() { id }: FindOneArgs) {
-    return Repository.findOne({ where: { id } });
+    return Repository.findOne({ where: { ...Repository.decode(id) } });
   }
 }

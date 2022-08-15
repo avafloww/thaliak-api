@@ -12,14 +12,23 @@ import { Repository } from './repository';
 import { Patch } from './patch';
 import { File } from './file';
 import { Field, ID, ObjectType } from 'type-graphql';
+import { OpaqueID, TransparentID } from '../util/opaqueId';
 
 @ObjectType()
 @Entity({ name: 'Versions' })
 export class Version extends BaseEntity {
 
-  @Field(() => ID)
   @PrimaryGeneratedColumn({ name: 'Id' })
-  public id: number;
+  public dbId: number;
+
+  @Field(() => ID)
+  public get id(): string {
+    return OpaqueID.encode(Version, this.dbId);
+  }
+
+  public static decode(opaqueId: string): TransparentID {
+    return OpaqueID.decode(Version, opaqueId);
+  }
 
   @Field()
   @Column({ name: 'VersionId' })
@@ -39,11 +48,11 @@ export class Version extends BaseEntity {
   public patches: Promise<Patch[]>;
 
   @Field(() => [File])
-  @ManyToMany(() => File, { lazy: true })
+  @ManyToMany(() => File, f => f.versions, { lazy: true })
   @JoinTable({
     name: 'VersionFiles',
     joinColumns: [
-      { name: 'VersionsId', referencedColumnName: 'id' },
+      { name: 'VersionsId', referencedColumnName: 'dbId' },
     ],
     inverseJoinColumns: [
       { name: 'FilesName', referencedColumnName: 'name' },
