@@ -406,6 +406,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/deepmerge@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@types/deepmerge@npm:2.2.0"
+  dependencies:
+    deepmerge: "*"
+  checksum: f68385937c649b39bcbf6be701f91293be46efb17885d4eb5b376753f661b0f90747abec5a8c2472abf8f7b8881ec15cfe5c9867bca43df6768ec3a7e835e0f0
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^8.4.2":
   version: 8.4.5
   resolution: "@types/eslint@npm:8.4.5"
@@ -519,7 +528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:^7.3.4":
+"@types/semver@npm:^7.3.3":
   version: 7.3.12
   resolution: "@types/semver@npm:7.3.12"
   checksum: 35536b2fc5602904f21cae681f6c9498e177dab3f54ae37c92f9a1b7e43c35f18bcd81e1c98c1cf0d33ee046bb06c771e9928c1c00a401d56a03f56549252a15
@@ -1234,6 +1243,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:*, deepmerge@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "deepmerge@npm:4.2.2"
+  checksum: a8c43a1ed8d6d1ed2b5bf569fa4c8eb9f0924034baf75d5d406e47e157a451075c4db353efea7b6bcc56ec48116a8ce72fccf867b6e078e7c561904b5897530b
+  languageName: node
+  linkType: hard
+
 "depd@npm:2.0.0":
   version: 2.0.0
   resolution: "depd@npm:2.0.0"
@@ -1769,7 +1785,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-query-complexity@npm:^0.7.2":
+"graphql-query-complexity@npm:^0.7.0":
   version: 0.7.2
   resolution: "graphql-query-complexity@npm:0.7.2"
   dependencies:
@@ -1780,7 +1796,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-subscriptions@npm:^1.2.0":
+"graphql-subscriptions@npm:^1.1.0":
   version: 1.2.1
   resolution: "graphql-subscriptions@npm:1.2.1"
   dependencies:
@@ -2879,7 +2895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
+"semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7":
   version: 7.3.7
   resolution: "semver@npm:7.3.7"
   dependencies:
@@ -3126,11 +3142,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "thaliak-api@workspace:."
   dependencies:
+    "@types/deepmerge": ^2.2.0
     "@types/express": ^4.17.13
     "@types/node": ^18.7.3
     apollo-server-core: ^3.10.1
     apollo-server-express: ^3.10.1
     class-validator: ^0.13.2
+    deepmerge: ^4.2.2
     dotenv: ^16.0.1
     eslint: ^8.22.0
     eslint-config-prettier: ^8.5.0
@@ -3142,7 +3160,7 @@ __metadata:
     prettier: ^2.7.1
     prettier-eslint: ^15.0.1
     reflect-metadata: ^0.1.13
-    type-graphql: ^1.2.0-rc.1
+    type-graphql: ^1.1.1
     typedi: ^0.10.0
     typeorm: ^0.3.7
     typescript: ^4.7.4
@@ -3204,7 +3222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
+"tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
@@ -3245,22 +3263,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-graphql@npm:^1.2.0-rc.1":
-  version: 1.2.0-rc.1
-  resolution: "type-graphql@npm:1.2.0-rc.1"
+"type-graphql@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "type-graphql@npm:1.1.1"
   dependencies:
     "@types/glob": ^7.1.3
     "@types/node": "*"
-    "@types/semver": ^7.3.4
+    "@types/semver": ^7.3.3
     glob: ^7.1.6
-    graphql-query-complexity: ^0.7.2
-    graphql-subscriptions: ^1.2.0
-    semver: ^7.3.4
-    tslib: ^2.1.0
+    graphql-query-complexity: ^0.7.0
+    graphql-subscriptions: ^1.1.0
+    semver: ^7.3.2
+    tslib: ^2.0.1
   peerDependencies:
     class-validator: ">=0.12.0"
-    graphql: ^15.5.0
-  checksum: 56979848bd7599ed344556fe460f5055b1d51452530a6c8e8ba8039a4badbdf6dc8269744ff2b9a047aea7c92918c092a9f1266049cbf8b2f785f138ad55ac15
+    graphql: ^15.3.0
+  checksum: fa14b76daf3a8017858884fdd0c5966d7a8892c21a317223cc79cf004e99e3b858a95443da15ef93ae24de4a1601be1536477e3a1fbb3754c9c7349d20b403eb
   languageName: node
   linkType: hard
 

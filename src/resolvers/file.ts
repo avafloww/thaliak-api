@@ -1,6 +1,9 @@
-import { Args, ArgsType, Field, ID, Query, Resolver } from 'type-graphql';
+import { Arg, Args, ArgsType, Field, FieldResolver, ID, Query, Resolver, Root } from 'type-graphql';
 import { File } from '../models/file';
 import { Service } from 'typedi';
+import { genOptsFromQuery } from '../util/queryHelpers';
+import { BaseInputMapOptions, remapInput } from '../util/inputRemapping';
+import { Version } from '../models/version';
 
 @ArgsType()
 class FindManyArgs {
@@ -21,36 +24,24 @@ class FindOneArgs extends FindManyArgs {
 @Resolver(File)
 export class FileResolver {
   @Query(() => [File])
-  async files(@Args() { name, sha1 }: FindManyArgs) {
-    if (sha1 && name) {
-      return File.find({ where: { sha1, name } });
-    }
-
-    if (sha1) {
-      return File.find({ where: { sha1 } });
-    }
-
-    if (name) {
-      return File.find({ where: { name } });
-    }
+  async files(@Args() args: FindManyArgs) {
+    return File.find(
+      genOptsFromQuery(File, false, {
+        ...args
+      })
+    );
   }
 
   @Query(() => File, { nullable: true })
-  async file(@Args() { id, name, sha1 }: FindOneArgs) {
-    if (id) {
-      return File.findOne({ where: { ...File.decode(id) } });
-    }
+  async file(@Args() { id, ...args }: FindOneArgs) {
+    return File.findOne(
+      genOptsFromQuery(File, false, id ? File.decode(id) : args)
+    );
+  }
 
-    if (sha1 && name) {
-      return File.findOne({ where: { sha1, name } });
-    }
-
-    if (sha1) {
-      return File.findOne({ where: { sha1 } });
-    }
-
-    if (name) {
-      return File.findOne({ where: { name } });
-    }
+  @FieldResolver(() => Version, { nullable: true })
+  async version(@Root() file: File, @Arg('id') versionId: string) {
+    const filtered = (await file.versions).filter((v) => v.id == versionId);
+    return filtered.length == 1 ? filtered[0] : null;
   }
 }

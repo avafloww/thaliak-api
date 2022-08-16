@@ -41,7 +41,7 @@ export class Patch extends BaseEntity {
 
   @Field()
   @Column({ name: 'RemoteOriginPath' })
-  public remoteOriginPath: string;
+  public url: string;
 
   @Column({ name: 'LocalStoragePath' })
   public localStoragePath: string;

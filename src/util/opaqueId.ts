@@ -10,15 +10,16 @@ export interface ExtendedTransparentID {
 }
 
 export const OpaqueID = {
-  encode(type: Function, dbId: number): string {
+  encode(type: Function | string, dbId: number): string {
     return this.encodeExtended(type, 'id', dbId);
   },
 
-  encodeExtended(type: Function, param: string, dbId: any): string {
-    return Buffer.from(`${type.name}:${param}:${dbId}`).toString('base64');
+  encodeExtended(type: Function | string, param: string, dbId: any): string {
+    const typeName = typeof type === 'string' ? type : type.name;
+    return Buffer.from(`${typeName}:${param}:${dbId}`).toString('base64');
   },
 
-  decode(type: Function, opaqueId: string): TransparentID {
+  decode(type: Function | string, opaqueId: string): TransparentID {
     const decoded = this.decodeExtended(type, opaqueId).transparentID;
     if (!isFinite(decoded.dbId)) {
       throw new UserInputError('Invalid ID provided');
@@ -27,9 +28,10 @@ export const OpaqueID = {
     return decoded;
   },
 
-  decodeExtended(type: Function, opaqueId: string): ExtendedTransparentID {
+  decodeExtended(type: Function | string, opaqueId: string): ExtendedTransparentID {
     const [inputName, param, inputId] = Buffer.from(opaqueId, 'base64').toString().split(':');
-    if (type.name !== inputName) {
+    const typeName = typeof type === 'string' ? type : type.name;
+    if (inputId === '' || typeName !== inputName) {
       throw new UserInputError('Invalid ID provided');
     }
 
