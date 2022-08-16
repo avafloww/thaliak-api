@@ -1,6 +1,6 @@
 import { FindManyOptions, FindOptionsWhere } from 'typeorm';
 import { ClassType } from 'type-graphql';
-import { UserInputError } from 'apollo-server-express';
+import { UserInputError } from 'apollo-server-core';
 
 export function genOptsFromQuery<T>(type: T, requireArgs: boolean, where: { [key: string]: any }): FindManyOptions<ClassType<T>> {
   let relations: string[] = [];

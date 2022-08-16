@@ -1,15 +1,12 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import http from 'http';
-import express from 'express';
 import { useContainer, DataSource } from 'typeorm';
 import { File } from './models/file';
 import { Patch } from './models/patch';
 import { PatchChain } from './models/patchChain';
 import { Repository } from './models/repository';
 import { Version } from './models/version';
-import { ApolloServer, gql } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { buildSchema } from 'type-graphql';
 import { PatchResolver } from './resolvers/patch';
 import { PatchChainResolver } from './resolvers/patchChain';
@@ -17,6 +14,7 @@ import { FileResolver } from './resolvers/file';
 import { RepositoryResolver } from './resolvers/repository';
 import { VersionResolver } from './resolvers/version';
 import { Container } from 'typedi';
+import { ApolloServer } from 'apollo-server';
 
 export const db = new DataSource({
   type: 'postgres',
@@ -42,8 +40,6 @@ async function bootstrap() {
   Container.set(DataSource, db);
   useContainer(Container);
 
-  const schemaFile = __dirname + '/schema.graphql';
-
   // build graphql schema
   const schema = await buildSchema({
     container: Container,
@@ -54,26 +50,15 @@ async function bootstrap() {
       RepositoryResolver,
       VersionResolver,
     ],
-    emitSchemaFile: schemaFile,
   });
-
-  // init express
-  const app = express();
-
-  // statically serve the schema
-  const staticSchema = express.static(schemaFile);
-  app.use('/schema.graphql', staticSchema);
-  app.use('/schema.gql', staticSchema);
-
-  const httpServer = http.createServer(app);
 
   // init apollo
   const port = parseInt(process.env.PORT ?? '4000');
   const server = new ApolloServer({
     schema,
+    cors: { origin: '*' },
     introspection: true,
     plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageGraphQLPlayground({
         tabs: [
           {
@@ -98,13 +83,7 @@ async function bootstrap() {
     ],
   });
 
-  await server.start();
-  server.applyMiddleware({
-    app,
-    path: '/',
-  });
-
-  await new Promise<void>(resolve => httpServer.listen({ port }, resolve));
+  await server.listen(port);
   console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 }
 

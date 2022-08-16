@@ -34,16 +34,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@types/deepmerge", "npm:2.2.0"],\
-            ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.7.3"],\
+            ["apollo-server", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
             ["apollo-server-core", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
-            ["apollo-server-express", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
             ["class-validator", "npm:0.13.2"],\
             ["deepmerge", "npm:4.2.2"],\
             ["dotenv", "npm:16.0.1"],\
             ["eslint", "npm:8.22.0"],\
             ["eslint-config-prettier", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:8.5.0"],\
-            ["express", "npm:4.18.1"],\
             ["graphql", "npm:15.8.0"],\
             ["husky", "npm:8.0.1"],\
             ["lint-staged", "npm:13.0.3"],\
@@ -1090,6 +1088,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["apollo-server", [\
+        ["npm:3.10.1", {\
+          "packageLocation": "./.yarn/cache/apollo-server-npm-3.10.1-089d05da59-83a4733aa1.zip/node_modules/apollo-server/",\
+          "packageDependencies": [\
+            ["apollo-server", "npm:3.10.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1", {\
+          "packageLocation": "./.yarn/__virtual__/apollo-server-virtual-e6f41c642d/0/cache/apollo-server-npm-3.10.1-089d05da59-83a4733aa1.zip/node_modules/apollo-server/",\
+          "packageDependencies": [\
+            ["apollo-server", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
+            ["@types/express", "npm:4.17.13"],\
+            ["@types/graphql", null],\
+            ["apollo-server-core", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
+            ["apollo-server-express", "virtual:e6f41c642d18995c41716cafc93c5786848e2ab7347d7099c9eb4a602d76794acd85c21790417391b6c7b9a952ceedaf609e538bcf804f3650c437b57bf44f94#npm:3.10.1"],\
+            ["express", "npm:4.18.1"],\
+            ["graphql", "npm:15.8.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/graphql",\
+            "graphql"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["apollo-server-core", [\
         ["npm:3.10.1", {\
           "packageLocation": "./.yarn/cache/apollo-server-core-npm-3.10.1-1ac7beb5eb-3ceb93b186.zip/node_modules/apollo-server-core/",\
@@ -1174,10 +1198,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1", {\
-          "packageLocation": "./.yarn/__virtual__/apollo-server-express-virtual-7d64f75f4f/0/cache/apollo-server-express-npm-3.10.1-7ddd386f0f-8449a615aa.zip/node_modules/apollo-server-express/",\
+        ["virtual:e6f41c642d18995c41716cafc93c5786848e2ab7347d7099c9eb4a602d76794acd85c21790417391b6c7b9a952ceedaf609e538bcf804f3650c437b57bf44f94#npm:3.10.1", {\
+          "packageLocation": "./.yarn/__virtual__/apollo-server-express-virtual-d4d77b3a62/0/cache/apollo-server-express-npm-3.10.1-7ddd386f0f-8449a615aa.zip/node_modules/apollo-server-express/",\
           "packageDependencies": [\
-            ["apollo-server-express", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
+            ["apollo-server-express", "virtual:e6f41c642d18995c41716cafc93c5786848e2ab7347d7099c9eb4a602d76794acd85c21790417391b6c7b9a952ceedaf609e538bcf804f3650c437b57bf44f94#npm:3.10.1"],\
             ["@types/accepts", "npm:1.3.5"],\
             ["@types/body-parser", "npm:1.19.2"],\
             ["@types/cors", "npm:2.8.12"],\
@@ -3991,16 +4015,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["thaliak-api", "workspace:."],\
             ["@types/deepmerge", "npm:2.2.0"],\
-            ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.7.3"],\
+            ["apollo-server", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
             ["apollo-server-core", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
-            ["apollo-server-express", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:3.10.1"],\
             ["class-validator", "npm:0.13.2"],\
             ["deepmerge", "npm:4.2.2"],\
             ["dotenv", "npm:16.0.1"],\
             ["eslint", "npm:8.22.0"],\
             ["eslint-config-prettier", "virtual:d406242c8ad98c290a22e9e10f86202988cae2d6db7fc23d44103273f0fd81410b2f7e724e029ec652da9de3f5cd7f15bec1c31532717e222a745fca72aece4c#npm:8.5.0"],\
-            ["express", "npm:4.18.1"],\
             ["graphql", "npm:15.8.0"],\
             ["husky", "npm:8.0.1"],\
             ["lint-staged", "npm:13.0.3"],\
