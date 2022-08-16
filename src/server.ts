@@ -8,7 +8,7 @@ import { Patch } from './models/patch';
 import { PatchChain } from './models/patchChain';
 import { Repository } from './models/repository';
 import { Version } from './models/version';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { buildSchema } from 'type-graphql';
 import { PatchResolver } from './resolvers/patch';
@@ -74,14 +74,34 @@ async function bootstrap() {
     introspection: true,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
-      ApolloServerPluginLandingPageGraphQLPlayground(),
+      ApolloServerPluginLandingPageGraphQLPlayground({
+        tabs: [
+          {
+            endpoint: '',
+            query: `query {
+  repositories {
+    id
+    slug
+    name
+    description
+    latestVersion {
+      versionString
+      firstOffered
+      lastOffered
+    }
+  }
+}
+`,
+          },
+        ],
+      }),
     ],
   });
 
   await server.start();
   server.applyMiddleware({
     app,
-    path: '/'
+    path: '/',
   });
 
   await new Promise<void>(resolve => httpServer.listen({ port }, resolve));
