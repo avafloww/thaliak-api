@@ -77,7 +77,7 @@ async function bootstrap() {
       ApolloServerPluginLandingPageGraphQLPlayground({
         tabs: [
           {
-            endpoint: '',
+            endpoint: 'https://thaliak.xiv.dev/graphql/',
             query: `query {
   repositories {
     id
