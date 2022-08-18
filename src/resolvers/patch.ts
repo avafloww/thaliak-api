@@ -14,6 +14,9 @@ export class FindManyArgs {
 
   @Field({ nullable: true })
   repositoryName?: string;
+
+  @Field({ nullable: true })
+  isActive?: boolean;
 }
 
 @ArgsType()

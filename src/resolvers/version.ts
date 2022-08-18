@@ -3,6 +3,7 @@ import { Version } from '../models/version';
 import { Service } from 'typedi';
 import { genOptsFromQuery } from '../util/queryHelpers';
 import { remapInput, RepositoryInputMapOptions } from '../util/inputRemapping';
+import { GraphQLBoolean } from 'graphql';
 
 @ArgsType()
 export class FindManyArgs {
@@ -65,5 +66,11 @@ export class VersionResolver {
   async lastOffered(@Root() version: Version) {
     const patches = await version.patches;
     return patches.length > 0 ? patches[0].lastOffered : null;
+  }
+
+  @FieldResolver(() => GraphQLBoolean)
+  async isActive(@Root() version: Version) {
+    const patches = await version.patches;
+    return patches.filter(patch => patch.isActive).length > 0;
   }
 }

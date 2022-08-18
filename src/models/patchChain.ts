@@ -42,4 +42,8 @@ export class PatchChain extends BaseEntity {
   @Field({ nullable: true })
   @Column({ name: 'LastOffered', nullable: true })
   public lastOffered?: Date;
+
+  @Field()
+  @Column({ name: 'IsActive' })
+  public isActive: boolean;
 }

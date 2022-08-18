@@ -62,6 +62,10 @@ export class Patch extends BaseEntity {
   @Column({ name: 'LastOffered', nullable: true })
   public lastOffered?: Date;
 
+  @Field()
+  @Column({ name: 'IsActive' })
+  public isActive: boolean;
+
   @Field(() => Int)
   @Column({ name: 'Size' })
   public size: number;
