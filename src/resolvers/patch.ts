@@ -1,4 +1,4 @@
-import { Args, ArgsType, Field, ID, Query, Resolver } from 'type-graphql';
+import { Args, ArgsType, Field, FieldResolver, ID, Query, Resolver, Root } from 'type-graphql';
 import { Patch } from '../models/patch';
 import { Service } from 'typedi';
 import { genOptsFromQuery } from '../util/queryHelpers';
@@ -43,5 +43,10 @@ export class PatchResolver {
     return Patch.findOne(genOptsFromQuery(
       Patch, true, remapInput(Patch, RepositoryInputMapOptions, args),
     ));
+  }
+
+  @FieldResolver(() => String)
+  async versionString(@Root() patch: Patch) {
+    return (await patch.version).versionString;
   }
 }
