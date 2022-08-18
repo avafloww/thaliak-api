@@ -33,7 +33,7 @@ export class PatchChain extends BaseEntity {
   @Field(() => Patch, { nullable: true })
   @ManyToOne(() => Patch, { nullable: true, lazy: true })
   @JoinColumn({ name: 'PreviousPatchId' })
-  public previousPatch?: Promise<Patch>;
+  public previousPatch: Promise<Patch | null>;
 
   @Field({ nullable: true })
   @Column({ name: 'FirstOffered', nullable: true })
