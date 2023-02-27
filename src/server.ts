@@ -31,6 +31,7 @@ export const db = new DataSource({
     Version,
   ],
   synchronize: false,
+  logging: true,
 });
 
 async function bootstrap() {
